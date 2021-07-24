@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BBS"> <!-- 반드시 작성!! -->
+	<!-- 
+	sql문 오라클에서 테스트하고 성공하면 문장 가져오는 식으로 연습
+	항상 패키지명까지 작성해서 VO에 저장되도록 설정  -->
+
+	<!-- select 태그 3개 속성 id, parameterType, resultType 
+	id : 사용할 명칭(필수 항목, 현재 매퍼에서 유일한 이름)
+	parameterType : 전달 받은 파라미터 데이터 타입 지정(선택적)
+	resultType : 조회 결과 값 저장하기 위한 데이터 타입 
+		(데이터 하나에 대한 타입 지정)
+	-->
+	
+	<!-- 전체 게시글 갯수 조회 -->
+	<select id="totalCount" resultType="int">
+		SELECT COUNT(*) AS CNT FROM BBS_T	
+	</select>
+	
+	<!--  페이지 해당 게시글 조회 -->
+	<select id="list" resultType="com.bc.bbs.vo.BBSVO"
+			parameterType="map">
+		SELECT *
+			FROM (SELECT ROWNUM R_NUM, BBS.*
+					FROM (SELECT *
+						FROM BBS_T
+					ORDER BY B_IDX DESC
+					) BBS
+				  )
+			WHERE R_NUM BETWEEN #{begin} AND #{end}
+	</select>
+
+	<!-- 게시글 하나 조회 -->
+	<select id="one" parameterType="string" resultType="BBSVO">
+		SELECT *
+		FROM BBS_T
+		WHERE B_IDX = #{b_idx}
+	</select>
+	
+	<!--  ==================== -->
+	<!--  게시글에 딸린 댓글 조회 -->
+	<select id="commList" parameterType="string" 
+		resultType="com.bc.bbs.vo.CommVO">
+		SELECT *
+		FROM COMMENT_T
+		WHERE B_IDX = #{b_idx}
+		ORDER BY C_IDX DESC
+	</select>
+</mapper>
+
+
+
+
+
+
