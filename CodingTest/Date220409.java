@@ -12,6 +12,11 @@ public class Date220409 {
 	 *	["leo", "kiki", "eden"]								["eden", "kiki"]							"leo"
 	 *	["marina", "josipa", "nikola", "vinko", "filipa"]	["josipa", "filipa", "marina", "nikola"]	"vinko"
 	 *	["mislav", "stanko", "mislav", "ana"]				["stanko", "ana", "mislav"]					"mislav"
+	 *
+	 *	채점 결과
+	 *  정확성: 10.0
+	 *  효율성: 0.0
+	 *  합계: 10.0 / 100.0
 	 **/
 	
 	class Solution {
